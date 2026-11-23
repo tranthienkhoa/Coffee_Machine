@@ -10,8 +10,8 @@ files:
   - name: tests.py
     learner_created: false
 feedback_link: https://hyperskill.org/projects/68/stages/370/implement#comment
-status: Failed
+status: Solved
 feedback:
-  message: "Wrong answer in test #1"
-  time: "Mon, 16 Nov 2026 23:32:02 UTC"
+  message: Congratulations!
+  time: "Tue, 17 Nov 2026 00:01:45 UTC"
 record: -1
