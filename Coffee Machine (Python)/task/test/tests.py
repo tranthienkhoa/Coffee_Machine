@@ -2,6 +2,7 @@ from hstest.stage_test import *
 from hstest.test_case import TestCase
 from hstest.check_result import CheckResult
 from typing import List
+from hstest import dynamic_test
 
 CheckResult.correct = lambda: CheckResult(True, '')
 CheckResult.wrong = lambda feedback: CheckResult(False, feedback)
@@ -68,7 +69,29 @@ exit
 '''
 
 
+import sys, os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 class CoffeeMachineTest(StageTest):
+    @dynamic_test
+    def test_class_exists(self):
+        try:
+            import machine.coffee_machine as cm
+        except ImportError:
+            return CheckResult.wrong("Could not import coffee_machine module")
+        except BaseException as e:
+            return CheckResult.wrong(
+                "Except the CoffeeMachine class, make sure to include everything else "
+                "within an if __name__ == '__main__': block to ensure your code can be tested properly."
+            )
+        if not hasattr(cm, "CoffeeMachine"):
+            return CheckResult.wrong("Class CoffeeMachine not defined")
+        # obj = cm.CoffeeMachine()
+        # if not (hasattr(obj, "water") and hasattr(obj, "beans") and hasattr(obj, "milk") and hasattr(obj, "cups") and hasattr(obj, "money")):
+        #     return CheckResult.wrong("Class 'CoffeeMachine' should have variables 'water', 'milk', 'beans', 'cups', and 'money' initialized with certain values.")
+        return CheckResult.correct()
+
+    
     def generate(self) -> List[TestCase]:
         return TestCase.from_stepik(
             [
@@ -83,7 +106,7 @@ class CoffeeMachineTest(StageTest):
                         "This test is exactly like in the example "
                         "- try to run it by yourself"
                     )
-                 ),
+                ),
 
                 (
                     test2_input,
